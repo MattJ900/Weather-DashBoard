@@ -18,7 +18,7 @@ $(document).ready(function () {
         `
     }
   
-    function displayCities(cityList) {          
+    function displayCities(cityList) {        // storages json displays city   
         $('.city-list').empty();
         var list = localStorage.getItem("cityList");
         cityList = (JSON.parse(list));
@@ -79,7 +79,7 @@ $(document).ready(function () {
         cityList = []
     }
     
-    $('#submitCity').click(function (event) {
+    $('#submitCity').click(function (event) { 
         event.preventDefault();
         var city = $('#city').val();
     
@@ -89,9 +89,9 @@ $(document).ready(function () {
 
         displayCities(cityList);
         if (city != '') {
-  
+           
             $.ajax({
-                url: 'https://api.openweathermap.org/data/2.5/weather?q=' + city + "&units=imperial" + "&APPID=5650ba04d76cc8ddc64d65a07cda4c4a",
+                url: 'https://api.openweathermap.org/data/2.5/weather?q=' + city + "&units=imperial" + "&APPID=62f5f3be7f3bdb626b63a07e6e79a260",
                 type: "GET",
                 success: function (data) {
                     var display = show(data);
@@ -100,7 +100,7 @@ $(document).ready(function () {
             });
   
             $.ajax({
-                url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + "&units=imperial" + "&APPID=5650ba04d76cc8ddc64d65a07cda4c4a",
+                url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + "&units=imperial" + "&APPID=62f5f3be7f3bdb626b63a07e6e79a260",
                 type: "GET",
                 success: function (data) {
                     var forecastDisplay = showForecast(data)
@@ -109,7 +109,7 @@ $(document).ready(function () {
             });
            
             $.ajax({
-                url: 'https://api.openweathermap.org/data/2.5/uvi?appid=' + "&APPID=5650ba04d76cc8ddc64d65a07cda4c4a" + "&lat=" + lat + "&lon=" + lon,
+                url: 'https://api.openweathermap.org/data/2.5/uvi?appid=' + "&APPID=62f5f3be7f3bdb626b63a07e6e79a260" + "&lat=" + lat + "&lon=" + lon,
                 type: "GET",
                 sucess: function (data) {
                     var uvDisplay = showUV(data);
@@ -131,14 +131,7 @@ $(document).ready(function () {
       } )
 
 
-    
-//       $("#reset-btn").on("click", function(e) {
-//         results.empty();
-//         e.preventDefault();
-//         var value = locaitonFieldEl.val().replace(" ", "_")
-//         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + value
-//         show(queryURL);
-//  })
+
 
 
   
