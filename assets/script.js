@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    // FUNCTIONS
-    function show(data) {
+    
+    function show(data) {            //Functions with moment js + openweathermap api
         return "<h2>" + data.name + moment().format(' (MM/DD/YYYY)') + "</h2>" +
             `
         <p><strong>Temperature</strong>: ${data.main.temp} °F</p>
@@ -18,11 +18,10 @@ $(document).ready(function () {
         `
     }
   
-    function displayCities(cityList) {
+    function displayCities(cityList) {          
         $('.city-list').empty();
         var list = localStorage.getItem("cityList");
         cityList = (JSON.parse(list));
-        // returning as a string, find javascript function to parse cityList
         if (list) {
             for (var i = 0; i < cityList.length; i++) {
                 var container = $("<div class=card></div>").text(cityList[i]);
@@ -32,26 +31,20 @@ $(document).ready(function () {
     }
   
     function showForecast(data) {
-        var forecast = data.list; // [{},{},{}]
-        // We have an array of 40 objects
-        // We want every 5th object's date, icon, temp, humidity (index 4)
-        // Display date, icon, temp and humidity via html
-        // LOGIC:
-        // Loop over array
+        var forecast = data.list; 
+       
         var currentForecast = [];
         for (var i = 0; i < forecast.length; i++) {
   
             var currentObject = forecast[i];
-            // First time through loop - 0: {}
-            // Second time through loop - 1: {}
-            // Third time through loop - 2: {}
+           
   
-            var dt_time = currentObject.dt_txt.split(' ')[1] // '12:00:00'[1 is the number of index]
-            // At each index..If...dt_txt === "12:00:00" get info
+            var dt_time = currentObject.dt_txt.split(' ')[1] 
+         
             if (dt_time === "12:00:00") {
-                // currentObject.main ... time, icon, temp, humidity
+             
                 var main = currentObject.main;
-                // Store each of these in variables
+               
                 var temp = main.temp; // TODO: Convert to F
                 var humidity = main.humidity;
                 var date = moment(currentObject.dt_txt).format('l'); // TODO: Use MomentJS to convert
@@ -77,23 +70,23 @@ $(document).ready(function () {
   
     }
   
-    // METHODS
+
   
-    var stored = localStorage.getItem("cityList")
+    var stored = localStorage.getItem("cityList")      //storage information on webpage using json
     if (stored) {
         cityList = JSON.parse(stored)
     } else {
         cityList = []
     }
-    //var cityList = [];
+    
     $('#submitCity').click(function (event) {
         event.preventDefault();
         var city = $('#city').val();
-        // push city to cityList array
+    
         cityList.push(city);
-        // set cityList in localStorage (remember to use stringify!)
+       
         localStorage.setItem("cityList", JSON.stringify(cityList));
-        // check length of array. if > 5 then don't add.
+
         displayCities(cityList);
         if (city != '') {
   
@@ -130,6 +123,24 @@ $(document).ready(function () {
     });
   
     displayCities(cityList);
+
+
+    $("#reset-btn").on("click", function(){   //reset page and clears localstorage data
+        localStorage.clear("cityList");
+        location.reload()
+      } )
+
+
+    
+//       $("#reset-btn").on("click", function(e) {
+//         results.empty();
+//         e.preventDefault();
+//         var value = locaitonFieldEl.val().replace(" ", "_")
+//         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + value
+//         show(queryURL);
+//  })
+
+
   
   });
   
